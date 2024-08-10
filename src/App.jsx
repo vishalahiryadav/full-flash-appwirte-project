@@ -1,54 +1,42 @@
-import React, { useState } from 'react';
-import { account, ID } from './lib/appwrite';
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import authservice from "./appwrite/Auth"
+import { login,logout } from "./store/authSlice"
+import Header from "./Components/Header/Header"
+import Footer from "./Components/Footer/Footer"
+import { Outlet } from "react-router-dom"
 
-const App = () => {
-  const [loggedInUser, setLoggedInUser] = useState(null);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
 
-  async function login(email, password) {
-    await account.createEmailPasswordSession(email, password);
-    setLoggedInUser(await account.get());
-  }
 
-  return (
-    <div>
-      <p>
-        {loggedInUser ? `Logged in as ${loggedInUser.name}` : 'Not logged in'}
-      </p>
+function App() {
+  const [loading,setLoading] = useState(true)
+  const dispatch = useDispatch()
 
-      <form>
-        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-        <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+useEffect(()=>{
+  authservice.getCurrentUser()
+  .then((userData)=>{
+    if(userData){
+     dispatch(login({userData}))
+    }else{
+      dispatch(logout())
+    }
+  })
+  .finally(()=>{
+    setLoading(false)
+  })
+},[])
 
-        <button type="button" onClick={() => login(email, password)}>
-          Login
-        </button>
+  return !loading ?(
+    <div className="min-h-srceen flex flex-wrap content-between bg-gray-400">
+      <div className="w-full block">
+           <Header />
+           <main>
+            TODO:<Outlet />
+           </main>
+           <Footer />
+      </div>
+      </div>
+  ): null
+}
 
-        <button
-          type="button"
-          onClick={async () => {
-            await account.create(ID.unique(), email, password, name);
-            login(email, password);
-          }}
-        >
-          Register
-        </button>
-
-        <button
-          type="button"
-          onClick={async () => {
-            await account.deleteSession('current');
-            setLoggedInUser(null);
-          }}
-        >
-          Logout
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default App;
+export default App

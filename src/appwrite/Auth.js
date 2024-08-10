@@ -31,15 +31,19 @@ export class Authservice {
             throw err
         }
     }
+   
     async login({ email, password }) {
         try {
             return await this.account.createEmailPasswordSession(email, password)
-
         } catch (error) {
-            throw error
+            console.log(error)
         }
         return null
     }
+    
+    
+
+
     async getCurrentUser() {
         try {
             return await this.account.get()
