@@ -1,10 +1,12 @@
 Full Flash Blog Site
 
 ![Screenshot (251)](https://github.com/user-attachments/assets/c8061fd4-bd76-4e9e-922b-fe7114b47343)
-![Screenshot (252)](https://github.com/user-attachments/assets/889a23c7-7cb1-4677-9c54-18c7fd08db51)
 
 
 This is a feature-rich blogging platform built using the Appwrite (BaaS) platform. The application provides seamless CRUD operations, state management, and user authentication features, making it an efficient and user-friendly platform for managing and sharing blog content.
+
+![Screenshot (252)](https://github.com/user-attachments/assets/889a23c7-7cb1-4677-9c54-18c7fd08db51)
+
 
 Problem Solved
 
@@ -28,6 +30,8 @@ React: Frontend framework.
 Redux Toolkit: State management.
 
 TinyMCE: Rich text editor for blog content.
+
+![Screenshot (250)](https://github.com/user-attachments/assets/03162b90-8c80-4b59-aee8-4e4c1894d691)
 
 
 Setup Instructions
